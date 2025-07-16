@@ -161,6 +161,15 @@ php artisan test tests/Unit/JobTest.php
 php artisan test --coverage
 ```
 
+## 🛠️ Development Tools & Environment
+
+### Database Tools
+
+-   **MySQL**: Primary database system
+-   **Laravel Herd**: Local development environment
+-   **TablePlus**: Database management interface
+-   **dbngix**: Database operations tool
+
 ## 🎨 Frontend Development
 
 ### Technologies Used
@@ -169,9 +178,9 @@ php artisan test --coverage
 -   **Alpine.js**: For interactive components
 -   **Vite**: For asset bundling and hot module replacement
 
-### Blade Components
+## 🧩 Blade Components Implementation
 
-#### Layout Component
+### Layout Component
 
 -   **Location**: `resources/views/components/layout.blade.php`
 -   **Purpose**: Main layout template for all pages
@@ -204,9 +213,16 @@ php artisan test --coverage
 </head>
 ```
 
-#### Form Components
+### Vite Integration in Header
 
--   **Label Component**: `resources/views/components/forms/label.blade.php`
+-   **CSS/JS Compilation**: `@vite(['resources/css/app.css', 'resources/js/app.js'])`
+-   **Google Fonts**: Hanken Grotesk font preconnect optimization
+-   **Meta Tags**: Responsive viewport and IE compatibility
+
+## 📝 Form Components Development
+
+### Label Component
+
 -   **Purpose**: Reusable form label with custom styling
 -   **Features**:
     -   White dot indicator for form fields
@@ -214,7 +230,9 @@ php artisan test --coverage
     -   Props support for `name` and `label` attributes
     -   Accessible label-input association
 
-#### Component Structure
+## 🔧 Component Structure Organization
+
+### Directory Structure
 
 ```
 resources/views/
@@ -227,7 +245,9 @@ resources/views/
 └── welcome.blade.php        # Home page
 ```
 
-#### Layout Structure Details
+## 📐 Layout Structure Implementation
+
+### Navigation and Content Areas
 
 ```blade
 <nav>
@@ -244,7 +264,13 @@ resources/views/
 </main>
 ```
 
-### Asset Compilation
+### Main Content Slot Usage
+
+-   **Dynamic Content**: `{{ $slot }}` allows flexible content insertion
+-   **Responsive Design**: `max-w-[986px] mx-auto` centers content with max width
+-   **Spacing**: `mt-10` provides top margin for content separation
+
+## ⚡ Asset Compilation Configuration
 
 ```bash
 # Development build
@@ -257,9 +283,11 @@ npm run build
 npm run watch
 ```
 
-### JavaScript Configuration
+## 🎯 JavaScript Configuration & Asset Management
 
-#### Main JavaScript File: `resources/js/app.js`
+### Main JavaScript File Implementation
+
+#### App.js Structure: `resources/js/app.js`
 
 ```javascript
 import "./bootstrap";
@@ -268,14 +296,14 @@ import "./bootstrap";
 import.meta.glob(["../images/**"]);
 ```
 
-**Key Features:**
+### Key Features & Functionality
 
 -   **Bootstrap Import**: Loads Laravel's JavaScript bootstrap configuration
 -   **Image Glob Import**: Dynamically imports all images from `resources/images/` directory
 -   **Vite Integration**: Uses Vite's `import.meta.glob()` for efficient asset bundling
 -   **Hot Module Replacement**: Supports live reloading during development
 
-#### Asset Structure
+### Asset Structure Organization
 
 ```
 resources/
@@ -288,11 +316,18 @@ resources/
     └── logo.svg             # Application logo and other images
 ```
 
-#### Vite Asset Loading
+### Vite Asset Loading Methods
 
 -   **CSS/JS Compilation**: `@vite(['resources/css/app.css', 'resources/js/app.js'])`
 -   **Image Assets**: `Vite::asset('resources/images/logo.svg')`
 -   **Glob Imports**: Automatic bundling of image assets via `import.meta.glob()`
+
+### Image Glob Import Benefits
+
+-   **Dynamic Loading**: Automatically includes all images in the bundle
+-   **Performance**: Only loads required assets
+-   **Maintainability**: New images are automatically discovered
+-   **Optimization**: Vite optimizes image assets during build
 
 ## 📝 Code Standards
 
@@ -430,6 +465,181 @@ DB_PASSWORD=your_password
 -   **Database**: MySQL Workbench or phpMyAdmin
 -   **Testing**: PHPUnit and Pest
 -   **Debugging**: Laravel Telescope (development)
+
+## 🏠 Welcome Page Implementation
+
+### Layout Component Integration
+
+#### Welcome.blade.php Structure: `resources/views/welcome.blade.php`
+
+```blade
+<x-layout>
+    <h1>Welcome to Musta's Pixel Position</h1>
+    <p>This is a simple Laravel application demonstrating pixel positioning.</p>
+</x-layout>
+```
+
+### Key Features & Implementation
+
+-   **Layout Component Usage**: Uses `<x-layout>` to wrap content with main layout
+-   **Component Integration**: Seamlessly integrates with the layout component system
+-   **Content Slot**: Content is automatically passed to the `{{ $slot }}` in layout component
+-   **Consistent Styling**: Inherits all styling and navigation from layout component
+
+### Benefits of Layout Component Usage
+
+-   **Consistency**: All pages maintain the same header, navigation, and footer
+-   **Maintainability**: Changes to layout affect all pages automatically
+-   **Responsive Design**: Layout component provides responsive navigation and styling
+-   **Authentication**: Inherits authentication-aware navigation states
+-   **Asset Loading**: Vite assets are loaded through layout component
+
+### Page Structure Integration
+
+-   **Navigation**: Inherits navigation bar with logo and menu items
+-   **Authentication**: Shows login/register or logout based on user state
+-   **Main Content**: Welcome content is displayed in the main content area
+-   **Styling**: Benefits from Tailwind CSS and dark theme from layout
+
+## � Results Page Implementation
+
+### Results View Structure: `resources/views/results.blade.php`
+
+```blade
+<x-layout>
+    <x-page-heading>Results</x-page-heading>
+
+    <div class="space-y-6">
+        @foreach($jobs as $job)
+            <x-job-card-wide :$job />
+        @endforeach
+    </div>
+</x-layout>
+```
+
+### Component Architecture
+
+#### Used Components
+
+-   **Layout Component**: `<x-layout>` - Main page wrapper
+-   **Page Heading Component**: `<x-page-heading>` - Page title display
+-   **Job Card Component**: `<x-job-card-wide>` - Individual job display card
+
+#### Key Features
+
+-   **Responsive Design**: Uses Tailwind CSS `space-y-6` for consistent spacing
+-   **Dynamic Content**: Loops through `$jobs` collection
+-   **Component-based**: Utilizes reusable Blade components
+-   **Consistent Layout**: Inherits navigation and styling from layout component
+
+### Data Flow
+
+1. **Controller**: Passes `$jobs` collection to view
+2. **View**: Iterates through jobs using `@foreach`
+3. **Component**: Each job is rendered using `<x-job-card-wide>`
+4. **Layout**: All content wrapped in consistent layout structure
+
+### Styling Implementation
+
+-   **Spacing**: `space-y-6` creates vertical spacing between job cards
+-   **Layout**: Inherits dark theme and responsive design from layout component
+-   **Typography**: Page heading styled through `<x-page-heading>` component
+
+### Usage Context
+
+-   **Search Results**: Displays job search results
+-   **Job Listings**: Shows filtered or paginated job listings
+-   **Category Results**: Displays jobs by category or tag
+
+## �🚨 PHP Version Compatibility Issues
+
+### Problem Description
+
+When running `composer install` with PHP 8.4.10, dependency conflicts occur due to package version constraints.
+
+#### Error Details
+
+```bash
+PS D:\Laravel\pixel-position> composer install
+Installing dependencies from lock file (including require-dev)
+Verifying lock file contents can be installed on current platform.
+Your lock file does not contain a compatible set of packages. Please run composer update.
+
+Problem 1
+  - nette/schema is locked to version v1.3.0 and an update of this package was not requested.
+  - nette/schema v1.3.0 requires php 8.1 - 8.3 -> your php version (8.4.10) does not satisfy that requirement.
+
+Problem 2
+  - nette/utils is locked to version v4.0.4 and an update of this package was not requested.
+  - nette/utils v4.0.4 requires php >=8.0 <8.4 -> your php version (8.4.10) does not satisfy that requirement.
+
+Problem 3
+  - brianium/paratest is locked to version v7.4.3 and an update of this package was not requested.
+  - brianium/paratest v7.4.3 requires php ~8.2.0 || ~8.3.0 -> your php version (8.4.10) does not satisfy that requirement.
+
+Problem 4
+  - league/config is locked to version v1.2.0 and an update of this package was not requested.
+  - league/config v1.2.0 requires nette/schema ^1.2 -> satisfiable by nette/schema[v1.3.0].
+  - nette/schema v1.3.0 requires php 8.1 - 8.3 -> your php version (8.4.10) does not satisfy that requirement.
+```
+
+### Solution Options
+
+#### Option 1: Update Dependencies (Recommended)
+
+```bash
+# Update all packages to latest compatible versions
+composer update
+
+# Or update specific packages
+composer update nette/schema nette/utils brianium/paratest league/config
+```
+
+#### Option 2: Downgrade PHP Version
+
+```bash
+# Using Laravel Herd, switch to PHP 8.3
+herd use php@8.3
+
+# Verify PHP version
+php -v
+
+# Then run composer install
+composer install
+```
+
+#### Option 3: Force Install (Not Recommended)
+
+```bash
+# Use --ignore-platform-reqs flag (may cause issues)
+composer install --ignore-platform-reqs
+```
+
+### Recommended PHP Version for Laravel Projects
+
+-   **Current Stable**: PHP 8.3.x
+-   **Minimum Required**: PHP 8.2.x
+-   **Avoid**: PHP 8.4.x (bleeding edge, limited package support)
+
+### Laravel Herd PHP Version Management
+
+```bash
+# List available PHP versions
+herd php:list
+
+# Switch to PHP 8.3
+herd use php@8.3
+
+# Verify current PHP version
+herd php:current
+```
+
+### Prevention Steps
+
+1. **Use Stable PHP Versions**: Stick to PHP 8.3.x for Laravel projects
+2. **Regular Updates**: Keep dependencies updated regularly
+3. **Testing**: Test on multiple PHP versions before deploying
+4. **Lock File Management**: Commit `composer.lock` to version control
 
 ---
 
