@@ -179,11 +179,30 @@ php artisan test --coverage
     -   Responsive navigation with authentication states
     -   Dark theme with Tailwind CSS styling
     -   Hanken Grotesk font integration
-    -   Vite asset compilation for CSS/JS
+    -   Vite asset compilation for CSS/JS in header
     -   Authentication-aware navigation (login/logout/register)
     -   Job posting functionality for authenticated users
     -   Logo integration with `Vite::asset('resources/images/logo.svg')`
     -   Main content area with `{{ $slot }}` for dynamic content
+
+#### Layout Header Structure
+
+```blade
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pixel Positions</title>
+
+    <!-- Google Fonts Integration -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Vite Asset Compilation -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+```
 
 #### Form Components
 
@@ -237,6 +256,43 @@ npm run build
 # Watch mode
 npm run watch
 ```
+
+### JavaScript Configuration
+
+#### Main JavaScript File: `resources/js/app.js`
+
+```javascript
+import "./bootstrap";
+
+// Vite glob import for dynamic image loading
+import.meta.glob(["../images/**"]);
+```
+
+**Key Features:**
+
+-   **Bootstrap Import**: Loads Laravel's JavaScript bootstrap configuration
+-   **Image Glob Import**: Dynamically imports all images from `resources/images/` directory
+-   **Vite Integration**: Uses Vite's `import.meta.glob()` for efficient asset bundling
+-   **Hot Module Replacement**: Supports live reloading during development
+
+#### Asset Structure
+
+```
+resources/
+├── css/
+│   └── app.css              # Main CSS file
+├── js/
+│   ├── app.js               # Main JavaScript entry point
+│   └── bootstrap.js         # Laravel JavaScript bootstrap
+└── images/
+    └── logo.svg             # Application logo and other images
+```
+
+#### Vite Asset Loading
+
+-   **CSS/JS Compilation**: `@vite(['resources/css/app.css', 'resources/js/app.js'])`
+-   **Image Assets**: `Vite::asset('resources/images/logo.svg')`
+-   **Glob Imports**: Automatic bundling of image assets via `import.meta.glob()`
 
 ## 📝 Code Standards
 
